@@ -22,13 +22,16 @@ local bert_model = "bert-base-uncased";
             "token_embedders": {
                 "bert": {
                     "type": "bert-pretrained",
-                    "pretrained_model": bert_model
+                    "pretrained_model": bert_model,
+                    "top_layer_only": true,
+                    "requires_grad": false
                 }
             }
         },
         "encoder": {
-            "type": "bag_of_embeddings",
-            "embedding_dim": 768
+            "type": "bert_pooler",
+            "pretrained_model": bert_model,
+            "requires_grad": false
         }
     },
     "iterator": {
