@@ -3,6 +3,9 @@ local bert_model = "bert-base-uncased";
 {
     "dataset_reader" : {
         "type": "classification-tsv",
+        "tokenizer": {
+            "word_splitter": "bert-basic"
+        },
         "token_indexers": {
             "bert": {
                 "type": "bert-pretrained",
