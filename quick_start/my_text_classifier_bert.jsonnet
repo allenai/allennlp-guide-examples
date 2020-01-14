@@ -4,14 +4,16 @@ local bert_model = "bert-base-uncased";
     "dataset_reader" : {
         "type": "classification-tsv",
         "tokenizer": {
-            "word_splitter": "bert-basic"
+            "type": "pretrained_transformer",
+            "model_name": bert_model,
         },
         "token_indexers": {
             "bert": {
-                "type": "bert-pretrained",
-                "pretrained_model": bert_model,
+                "type": "pretrained_transformer",
+                "model_name": bert_model,
             }
-        }
+        },
+        "max_tokens": 512
     },
     "train_data_path": "data/movie_review/train.tsv",
     "validation_data_path": "data/movie_review/dev.tsv",
@@ -20,14 +22,12 @@ local bert_model = "bert-base-uncased";
         "embedder": {
             "allow_unmatched_keys": true,
             "embedder_to_indexer_map": {
-                "bert": ["bert", "bert-offsets"]
+                "bert": ["bert", "mask"]
             },
             "token_embedders": {
                 "bert": {
-                    "type": "bert-pretrained",
-                    "pretrained_model": bert_model,
-                    "top_layer_only": true,
-                    "requires_grad": false
+                    "type": "pretrained_transformer",
+                    "model_name": bert_model
                 }
             }
         },
@@ -42,7 +42,12 @@ local bert_model = "bert-base-uncased";
         "batch_size": 8
     },
     "trainer": {
-        "optimizer": "adam",
+        "optimizer": {
+            "type": "bert_adam",
+            "lr": 1.0e-5,
+            "warmup": 0.5,
+            "t_total": 1000
+        },
         "num_epochs": 5
     }
 }
