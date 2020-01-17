@@ -3,8 +3,7 @@ from typing import Dict, Iterable, List
 from allennlp.data import DatasetReader, Instance
 from allennlp.data.fields import LabelField, TextField
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
-from allennlp.data.tokenizers import Token, Tokenizer, WordTokenizer
-from allennlp.data.tokenizers.word_splitter import SimpleWordSplitter
+from allennlp.data.tokenizers import Token, Tokenizer, SpacyTokenizer
 
 
 @DatasetReader.register('classification-tsv')
@@ -15,7 +14,7 @@ class ClassificationTsvReader(DatasetReader):
                  token_indexers: Dict[str, TokenIndexer] = None,
                  max_tokens: int = None):
         super().__init__(lazy)
-        self.tokenizer = tokenizer or WordTokenizer(word_splitter=SimpleWordSplitter())
+        self.tokenizer = tokenizer or SpacyTokenizer()
         self.token_indexers = token_indexers or {'tokens': SingleIdTokenIndexer()}
         self.max_tokens = max_tokens
 
