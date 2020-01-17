@@ -20,10 +20,6 @@ local bert_model = "bert-base-uncased";
     "model": {
         "type": "simple_classifier",
         "embedder": {
-            "allow_unmatched_keys": true,
-            "embedder_to_indexer_map": {
-                "bert": ["bert", "mask"]
-            },
             "token_embedders": {
                 "bert": {
                     "type": "pretrained_transformer",
@@ -43,10 +39,8 @@ local bert_model = "bert-base-uncased";
     },
     "trainer": {
         "optimizer": {
-            "type": "bert_adam",
-            "lr": 1.0e-5,
-            "warmup": 0.5,
-            "t_total": 1000
+            "type": "huggingface_adamw",
+            "lr": 1.0e-5
         },
         "num_epochs": 5
     }
