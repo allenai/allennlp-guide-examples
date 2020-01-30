@@ -1,1 +1,1 @@
-from my_text_classifier.models.simple_classifier import SimpleClassifier
+from .simple_classifier import SimpleClassifier
