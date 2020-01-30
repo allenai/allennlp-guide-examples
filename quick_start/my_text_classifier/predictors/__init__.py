@@ -1,1 +1,1 @@
-from my_text_classifier.predictors.sentence_classifier_predictor import SentenceClassifierPredictor
+from .sentence_classifier_predictor import SentenceClassifierPredictor

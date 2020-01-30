@@ -1,1 +1,1 @@
-from my_text_classifier.dataset_readers.classification_tsv import ClassificationTsvReader
+from .classification_tsv import ClassificationTsvReader
