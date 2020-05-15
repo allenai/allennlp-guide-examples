@@ -3,7 +3,7 @@ from typing import Dict, Iterable, List
 from allennlp.data import DatasetReader, Instance
 from allennlp.data.fields import LabelField, TextField
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
-from allennlp.data.tokenizers import Token, Tokenizer, SpacyTokenizer
+from allennlp.data.tokenizers import Token, Tokenizer, WhitespaceTokenizer
 
 
 @DatasetReader.register('classification-tsv')
@@ -14,11 +14,12 @@ class ClassificationTsvReader(DatasetReader):
                  max_tokens: int = None,
                  **kwargs):
         super().__init__(**kwargs)
-        self.tokenizer = tokenizer or SpacyTokenizer()
+        self.tokenizer = tokenizer or WhitespaceTokenizer()
         self.token_indexers = token_indexers or {'tokens': SingleIdTokenIndexer()}
         self.max_tokens = max_tokens
 
-    def text_to_instance(self, tokens: List[Token], label: str = None) -> Instance:
+    def text_to_instance(self, text: str, label: str = None) -> Instance:
+        tokens = self.tokenizer.tokenize(text)
         if self.max_tokens:
             tokens = tokens[:self.max_tokens]
         text_field = TextField(tokens, self.token_indexers)
@@ -31,5 +32,4 @@ class ClassificationTsvReader(DatasetReader):
         with open(file_path, 'r') as lines:
             for line in lines:
                 text, sentiment = line.strip().split('\t')
-                tokens = self.tokenizer.tokenize(text)
-                yield self.text_to_instance(tokens, sentiment)
+                yield self.text_to_instance(text, sentiment)

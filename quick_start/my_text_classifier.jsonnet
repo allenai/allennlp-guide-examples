@@ -24,9 +24,9 @@
             "embedding_dim": 10
         }
     },
-    "iterator": {
-        "type": "basic",
-        "batch_size": 8
+    "data_loader": {
+        "batch_size": 8,
+        "shuffle": true
     },
     "trainer": {
         "optimizer": "adam",
