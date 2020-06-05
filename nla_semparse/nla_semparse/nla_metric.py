@@ -103,6 +103,7 @@ class NlaMetric(Metric):
         if reset:
             self.reset()
         return metrics
+
     @overrides
     def reset(self):
         self._num_well_formed = 0
