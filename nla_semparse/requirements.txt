@@ -1,0 +1,2 @@
+allennlp==1.0.0rc1
+allennlp-models==1.0.0rc1
