@@ -2,6 +2,7 @@ from typing import Dict
 
 import torch
 from allennlp.data import Vocabulary
+from allennlp.data import TextFieldTensors
 from allennlp.models import Model
 from allennlp.modules import TextFieldEmbedder, Seq2VecEncoder
 from allennlp.nn import util
@@ -22,7 +23,7 @@ class SimpleClassifier(Model):
         self.accuracy = CategoricalAccuracy()
 
     def forward(self,
-                text: Dict[str, torch.Tensor],
+                text: TextFieldTensors,
                 label: torch.Tensor = None) -> Dict[str, torch.Tensor]:
         # Shape: (batch_size, num_tokens, embedding_dim)
         embedded_text = self.embedder(text)
