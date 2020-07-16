@@ -1,2 +1,2 @@
 wasabi>=0.2.1,<1.1.0
-git+https://github.com/allenai/allennlp.git@v1.0.0rc4
+allennlp==1.0
