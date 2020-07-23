@@ -1,2 +1,2 @@
-allennlp==1.0.0rc5
-allennlp-models==1.0.0rc5
+allennlp==1.0.0
+allennlp_models==1.0.0
