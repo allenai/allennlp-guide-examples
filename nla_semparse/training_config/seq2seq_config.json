@@ -2,10 +2,10 @@
   "dataset_reader": {
     "type": "seq2seq",
     "source_tokenizer": {
-      "type": "spacy"
+      "type": "whitespace"
     },
     "target_tokenizer": {
-      "type": "spacy"
+      "type": "whitespace"
     },
     "source_token_indexers": {
       "tokens": {
