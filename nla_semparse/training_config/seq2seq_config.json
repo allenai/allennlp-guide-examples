@@ -54,7 +54,7 @@
         "vocab_namespace": "target_tokens",
         "embedding_dim": 50
       },
-      "scheduled_sampling_ratio": 0.9,
+      "scheduled_sampling_ratio": 0.5,
       "beam_size": 5,
       "token_based_metric": "nla_metric"
     }

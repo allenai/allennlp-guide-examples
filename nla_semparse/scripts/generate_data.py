@@ -1,31 +1,39 @@
+import sys
+import os
 import random
 import math
 import argparse
 from typing import List, Dict
+
+sys.path.append(os.path.abspath(os.path.join('..', 'nla_semparse')))
+
+from nla_semparse.nla_language import NlaLanguage
+
 
 class DataGenerator:
     """
     Generator for data points for natural language arithmetic.
     """
     def __init__(self):
+        self.language = NlaLanguage()
         self.numbers = [
-            {'meaning': ['0'], 'translation': 'zero', 'denotation': 0},
-            {'meaning': ['1'], 'translation': 'one', 'denotation': 1},
-            {'meaning': ['2'], 'translation': 'two', 'denotation': 2},
-            {'meaning': ['3'], 'translation': 'three', 'denotation': 3},
-            {'meaning': ['4'], 'translation': 'four', 'denotation': 4},
-            {'meaning': ['5'], 'translation': 'five', 'denotation': 5},
-            {'meaning': ['6'], 'translation': 'six', 'denotation': 6},
-            {'meaning': ['7'], 'translation': 'seven', 'denotation': 7},
-            {'meaning': ['8'], 'translation': 'eight', 'denotation': 8},
-            {'meaning': ['9'], 'translation': 'nine', 'denotation': 9},
+            {'meaning': '0', 'translation': 'zero'},
+            {'meaning': '1', 'translation': 'one'},
+            {'meaning': '2', 'translation': 'two'},
+            {'meaning': '3', 'translation': 'three'},
+            {'meaning': '4', 'translation': 'four'},
+            {'meaning': '5', 'translation': 'five'},
+            {'meaning': '6', 'translation': 'six'},
+            {'meaning': '7', 'translation': 'seven'},
+            {'meaning': '8', 'translation': 'eight'},
+            {'meaning': '9', 'translation': 'nine'},
         ]
         # The order below defines precedence (in ascending order).
         self.operators = [
-            {'meaning': ['-'], 'translation': 'minus', 'denotation': lambda x, y: x - y},
-            {'meaning': ['+'], 'translation': 'plus', 'denotation': lambda x, y: x + y},
-            {'meaning': ['*'], 'translation': 'times', 'denotation': lambda x, y: x * y},
-            {'meaning': ['/'], 'translation': 'over', 'denotation': lambda x, y: x // y},
+            {'meaning': 'subtract', 'translation': 'minus'},
+            {'meaning': 'add', 'translation': 'plus'},
+            {'meaning': 'multiply', 'translation': 'times'},
+            {'meaning': 'divide', 'translation': 'over'},
         ]
 
 
@@ -52,12 +60,14 @@ class DataGenerator:
                                                   allowed_operators[operator_index:])
         second_argument = self.generate_expression(num_operations_for_second,
                                                    allowed_operators[operator_index:])
-        meaning_representation = operator["meaning"] + first_argument["meaning"] + second_argument["meaning"]
-        meaning_representation = ['('] + meaning_representation + [')']
+        meaning_representation_parts = [operator["meaning"],
+                                        first_argument["meaning"],
+                                        second_argument["meaning"]]
+        meaning_representation = '(' + " ".join(meaning_representation_parts) + ')'
         return {"meaning": meaning_representation,
                 "translation": " ".join([first_argument["translation"], operator["translation"],
                                          second_argument["translation"]]),
-                "denotation": operator["denotation"](first_argument["denotation"], second_argument["denotation"])}
+                "denotation": self.language.execute(meaning_representation)}
 
 
     def generate_data(self,
@@ -129,23 +139,23 @@ def main():
         with open(train_file_name, "w") as output_file:
             for datum in data["train"]:
                 source = datum["translation"]
-                target = " ".join(datum["meaning"])
+                target = datum["meaning"].replace("(", "( ").replace(")", " )")
                 print(f"{source}\t{target}", file=output_file)
         with open(dev_file_name, "w") as output_file:
             for datum in data["dev"]:
                 source = datum["translation"]
-                target = " ".join(datum["meaning"])
+                target = datum["meaning"].replace("(", "( ").replace(")", " )")
                 print(f"{source}\t{target}", file=output_file)
         with open(test_file_name, "w") as output_file:
             for datum in data["test"]:
                 source = datum["translation"]
-                target = " ".join(datum["meaning"])
+                target = datum["meaning"].replace("(", "( ").replace(")", " )")
                 print(f"{source}\t{target}", file=output_file)
     else:
         with open(args.output, "w") as output_file:
             for datum in data["data"]:
                 source = datum["translation"]
-                target = " ".join(datum["meaning"])
+                target = datum["meaning"].replace("(", "( ").replace(")", " )")
                 print(f"{source}\t{target}", file=output_file)
 
 
