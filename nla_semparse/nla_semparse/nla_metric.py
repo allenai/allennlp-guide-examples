@@ -4,7 +4,7 @@ from allennlp.training.metrics.metric import Metric
 
 from allennlp_semparse.domain_languages.domain_language import ExecutionError
 
-from nla_semparse.nla_language import NlaLanguage
+from .nla_language import NlaLanguage
 
 @Metric.register('nla_metric')
 class NlaMetric(Metric):
