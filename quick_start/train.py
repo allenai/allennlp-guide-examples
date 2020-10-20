@@ -3,7 +3,7 @@ from typing import Dict, Iterable, List, Tuple
 
 import allennlp
 import torch
-from allennlp.data import DataLoader, DatasetReader, Instance, Vocabulary
+from allennlp.data import PyTorchDataLoader, DatasetReader, Instance, Vocabulary
 from allennlp.data.fields import LabelField, TextField
 from allennlp.data.token_indexers import TokenIndexer, SingleIdTokenIndexer
 from allennlp.data.tokenizers import Token, Tokenizer, WhitespaceTokenizer
@@ -138,12 +138,12 @@ def run_training_loop():
 def build_data_loaders(
     train_data: torch.utils.data.Dataset,
     dev_data: torch.utils.data.Dataset,
-) -> Tuple[allennlp.data.DataLoader, allennlp.data.DataLoader]:
-    # Note that DataLoader is imported from allennlp above, *not* torch.
+) -> Tuple[allennlp.data.PyTorchDataLoader, allennlp.data.PyTorchDataLoader]:
+    # Note that PyTorchDataLoader is imported from allennlp above, *not* torch.
     # We need to get the allennlp-specific collate function, which is
     # what actually does indexing and batching.
-    train_loader = DataLoader(train_data, batch_size=8, shuffle=True)
-    dev_loader = DataLoader(dev_data, batch_size=8, shuffle=False)
+    train_loader = PyTorchDataLoader(train_data, batch_size=8, shuffle=True)
+    dev_loader = PyTorchDataLoader(dev_data, batch_size=8, shuffle=False)
     return train_loader, dev_loader
 
 
