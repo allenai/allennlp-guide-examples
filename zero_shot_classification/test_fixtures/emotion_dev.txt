@@ -1,0 +1,7 @@
+fear	emotional_events	My car skidded on the wet street.
+fear	emotional_events	When we stayed in Vienna with our class, my friend and I behaved incorrectly. Our teacher threatened us with exclusion from school.
+joy	emotional_events	When I met my girlfriend - I had not counted on that.
+guilt	emotional_events	It happens sometimes in connection with certain persons with whom I have frequent relationships but nothing special.
+sadness	emotional_events	In a social situation I became interested in a woman. We talked, we laughed, we enjoyed each other. She desappeared for a few minutes, and a little after appeared with an other man.
+shame	emotional_events	In the traffic I insulted a man who crossed my way. Afterwards I paired with him, and felt shame because of mine lack of pacience and ridiculous attitude.
+guilt	emotional_events	A great friend of mine travelled with the intention to change his life. He didn't succeed and returned depressed. I had not power to support his frustration and his behavioral change.

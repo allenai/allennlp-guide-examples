@@ -1,0 +1,47 @@
+{
+  "dataset_reader": {
+    "type": "zero_shot_classification",
+    "token_indexers": {
+      "tokens": {
+        "type": "single_id",
+        "token_min_padding_length": 4
+      }
+    }
+  },
+  "train_data_path": "https://storage.googleapis.com/allennlp-public-data/zero-shot/emotion/train_pu_half_v0.txt",
+  "validation_data_path": "https://storage.googleapis.com/allennlp-public-data/zero-shot/emotion/dev.txt",
+  "model": {
+    "type": "simple_embedding_zero_shot_classifier",
+    "embedder": {
+      "token_embedders": {
+        "tokens": {
+            "type": "embedding",
+            "pretrained_file": "https://allennlp.s3.amazonaws.com/datasets/glove/glove.6B.300d.txt.gz",
+            "embedding_dim": 300,
+            "trainable": false
+        }
+      }
+    },
+    "encoder": {
+      "type": "cnn",
+      "num_filters": 300,
+      "ngram_filter_sizes": [2, 3, 4],
+      "output_dim": 300,
+      "embedding_dim": 300
+    }
+  },
+  "data_loader": {
+    "batch_sampler": {
+      "type": "bucket",
+      "padding_noise": 0.05,
+      "batch_size": 32
+    }
+  },
+  "trainer": {
+    "num_epochs": 10,
+    "patience": 5,
+    "validation_metric": "+accuracy",
+    "cuda_device": -1,
+    "optimizer": "adam"
+  }
+}

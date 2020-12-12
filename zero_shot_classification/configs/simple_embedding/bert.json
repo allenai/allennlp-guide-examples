@@ -1,0 +1,48 @@
+{
+  "dataset_reader": {
+    "type": "zero_shot_classification",
+    "tokenizer": {
+      "type": "pretrained_transformer",
+      "model_name": "bert-base-uncased"
+    },
+    "token_indexers": {
+      "tokens": {
+        "type": "pretrained_transformer",
+        "max_length": 512,
+        "model_name": "bert-base-uncased"
+      }
+    }
+  },
+  "train_data_path": "https://storage.googleapis.com/allennlp-public-data/zero-shot/emotion/train_pu_half_v0.txt",
+  "validation_data_path": "https://storage.googleapis.com/allennlp-public-data/zero-shot/emotion/dev.txt",
+  "model": {
+    "type": "simple_embedding_zero_shot_classifier",
+    "embedder": {
+      "token_embedders": {
+        "tokens": {
+            "type": "pretrained_transformer",
+            "max_length": 512,
+            "model_name": "bert-base-uncased"
+        }
+      }
+    },
+    "encoder": {
+      "type": "cls_pooler",
+      "embedding_dim": 768
+    }
+  },
+  "data_loader": {
+    "batch_sampler": {
+      "type": "bucket",
+      "padding_noise": 0.05,
+      "batch_size": 32
+    }
+  },
+  "trainer": {
+    "num_epochs": 10,
+    "patience": 5,
+    "validation_metric": "+accuracy",
+    "cuda_device": -1,
+    "optimizer": "adam"
+  }
+}
